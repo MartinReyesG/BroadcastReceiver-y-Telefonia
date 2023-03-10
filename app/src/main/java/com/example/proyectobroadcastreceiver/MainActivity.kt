@@ -16,8 +16,6 @@ import androidx.core.content.ContextCompat
 import com.example.proyectobroadcastreceiver.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-
     //Condifguracion del binding para poder acceder a las variables que tenemos en el layout principal
     private lateinit var binding: ActivityMainBinding
 
@@ -35,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             val phoneNumber = binding.etNumero.text.toString()
             val message = binding.etMensaje.text.toString()
 
+            //Activa los servicios
             val intent = Intent(this, MyService::class.java)
             startService(intent)
 
@@ -45,12 +44,9 @@ class MainActivity : AppCompatActivity() {
             editor.putString("phoneNumber", phoneNumber)
             editor.putString("message", message)
             editor.apply()
-
-
             //Mostramnos pequeño mensaje para aviasrle al usuario que guardamos los datos
-            Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Datos registrados correctamente", Toast.LENGTH_SHORT).show()
         }
-
         //Nos suscribrimos al CallReceiver
         callReceiver = CallReceiver()
     }
@@ -62,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         intentFilter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
         registerReceiver(callReceiver, intentFilter)
     }
-
     override fun onStop() {
         super.onStop()
         // Desregistrar el BroadcastReceiver
